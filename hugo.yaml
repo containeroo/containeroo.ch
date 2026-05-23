@@ -7,7 +7,7 @@ enableMissingTranslationPlaceholders: true
 enableRobotsTXT: true
 enableEmoji: true
 enableGitInfo: true
-languageCode: en-us
+locale: en-US
 module:
   proxy: direct
   imports:
@@ -69,7 +69,7 @@ languages:
   en:
     title: contineroo.ch
     description: where containers happen
-    languageName: English
+    label: English
     weight: 1
 markup:
   goldmark:
