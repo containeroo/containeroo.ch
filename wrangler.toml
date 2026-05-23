@@ -1,0 +1,8 @@
+name = "website"
+pages_build_output_dir = "public"
+compatibility_date = "2026-05-23"
+
+[vars]
+HUGO_VERSION = "0.161.1"
+NODE_VERSION = "26.0.0"
+GO_VERSION = "1.26.3"
