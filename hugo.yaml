@@ -29,7 +29,7 @@ params:
   archived_version: false
   version: "0.0"
   url_latest_version: "https://containeroo.ch"
-  github_repo: "https://github.com/containeroo/website"
+  github_repo: "https://github.com/containeroo/containeroo.ch"
   github_branch: master
   offlineSearch: false
   prism_syntax_highlighting: false

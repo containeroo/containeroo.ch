@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "containeroo-ch",
+  "account_id": "efd2692f14158521743e17fb17d10d03",
+  "compatibility_date": "2026-07-21",
+  "preview_urls": true,
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}

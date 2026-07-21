@@ -1,5 +1,5 @@
 /public
 resources/
 node_modules/
-package-lock.json
+.wrangler/
 .hugo_build.lock

@@ -1,4 +1,4 @@
-module github.com/containeroo/website
+module github.com/containeroo/containeroo.ch
 
 go 1.26.3
 
