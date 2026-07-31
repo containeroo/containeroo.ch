@@ -16,8 +16,10 @@ Supported route kinds:
 
 ## Prerequisites
 
-- Install the Gateway API CRDs (for example `gateway.networking.k8s.io/v1` from the upstream install manifests).
+- Install one or more supported Gateway API route CRDs served from `gateway.networking.k8s.io/v1`.
 - Start cloudflare-operator with the flag `--enable-gateway-api`.
+
+At startup, the operator discovers the installed route CRDs and starts only the corresponding controllers. Enabling Gateway API support without any supported route CRD installed causes startup to fail so that a configuration mistake is visible.
 
 When installed with Helm, enable Gateway API reconciliation with:
 
@@ -32,6 +34,8 @@ The same annotations used for Ingress are honored on supported Gateway API route
 `cloudflare-operator.io/content` or `cloudflare-operator.io/ip-ref`
 
 Route objects that do not have one of these annotations will be ignored by cloudflare-operator.
+
+DNS content comes from these annotations; the controller does not derive it from the parent Gateway address or route status.
 
 | Annotation                        | Value                     | Description                                                 | Required                    |
 | --------------------------------- | ------------------------- | ----------------------------------------------------------- | --------------------------- |
@@ -120,3 +124,9 @@ spec:
 This creates a DNS record for the gRPC host `grpc.example.com`.
 
 If `cloudflare-operator.io/account-ref` is set, the generated DNSRecord will use that Account. When the matching Zone also has `spec.accountRef.name`, both references must point to the same Account.
+
+## Generated record lifecycle
+
+The controller creates one DNSRecord for each non-empty route hostname. Generated DNSRecords are created in the route namespace and have an owner reference to the route. Changes to hostnames or supported annotations are reflected in those objects.
+
+When a route is being deleted, reconciliation does not create new DNSRecords. Kubernetes garbage collection removes its owner-controlled DNSRecords, whose finalizers then coordinate deletion of the corresponding Cloudflare records. This also prevents attempted creates in a namespace that is already terminating.

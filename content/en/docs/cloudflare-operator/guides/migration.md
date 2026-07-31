@@ -4,9 +4,9 @@ description: "Learn how to migrate DNS records to cloudflare-operator"
 weight: 50
 ---
 
-cloudflare-operator is designed to be the single source of truth for DNS records. This means that all records not known to cloudflare-operator will be deleted.
+cloudflare-operator can be the single source of truth for a zone's DNS records. By default, however, a Zone has `spec.prune: false` and records not represented by DNSRecord objects are left untouched.
 
-In order to prevent the deletion of the entire DNS zone after you have installed cloudflare-operator, you need to migrate your DNS records to cloudflare-operator.
+If you want to enable `spec.prune: true`, migrate every record that the operator should retain before enabling pruning. Once pruning is enabled, records that are neither represented by DNSRecord objects nor matched by `spec.ignoredRecords` can be deleted from that Zone.
 
 For that we have created a <a href="https://github.com/containeroo/cfop-generator" target="blank">migration tool</a> that generates DNSRecord objects for all DNS records in your DNS zone.
 
@@ -25,3 +25,5 @@ Make sure to verify the generated objects before applying them to your cluster.
 ```bash
 kubectl apply -f <path-to-generated-file>
 ```
+
+Wait until the imported DNSRecord objects report `Ready=True`, then enable pruning on the Zone if that is the desired operating mode. Keep `prune: false` if the zone should continue to contain records managed outside Kubernetes.

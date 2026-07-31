@@ -77,11 +77,16 @@ Example `values.yaml` file:
 
 ```yaml
 ---
-image:
-  repository: ghcr.io/containeroo/cloudflare-operator
-  tag: latest
-  pullPolicy: IfNotPresent
+gatewayAPI:
+  enabled: true
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 64Mi
 ```
+
+Leave `image.tag` empty unless you intentionally need to override it; the chart uses its tested `appVersion` by default. Enabling `gatewayAPI` also requires the Gateway API CRDs to be installed in the cluster.
 
 Run the following command to install cloudflare-operator with the customized Helm values:
 

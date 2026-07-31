@@ -56,6 +56,12 @@ This will create a DNS record for the host `blog.example.com` with the content `
 
 If `cloudflare-operator.io/account-ref` is set, the generated DNSRecord will use that Account. When the matching Zone also has `spec.accountRef.name`, both references must point to the same Account.
 
+## Generated record lifecycle
+
+The controller creates one DNSRecord for each non-empty Ingress host. Generated DNSRecords are created in the Ingress namespace and have an owner reference to the Ingress. Changes to hosts or supported annotations are reflected in those objects.
+
+When an Ingress is being deleted, reconciliation does not create new DNSRecords. Kubernetes garbage collection removes its owner-controlled DNSRecords, whose finalizers then coordinate deletion of the corresponding Cloudflare records. This also prevents attempted creates in a namespace that is already terminating.
+
 {{% alert color="info" %}}
 **Note**\
 cloudflare-operator only supports `networking.k8s.io/v1` Ingresses.
