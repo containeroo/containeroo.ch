@@ -18,7 +18,6 @@ flowchart TB
 
   hostSources --> hostController --> generated --> dnsController --> cloudflare
 
-  deletionGuard["Deletion guard<br/>terminating sources create nothing"] -.-> hostController
   manual["Kubernetes API<br/>manual / GitOps DNSRecord"] --> dnsController
 
   scope["Kubernetes API<br/>Secret → Account · Zone"] --> scopeController["Account + Zone controllers<br/>credentials · identity · optional pruning"]
@@ -35,11 +34,9 @@ flowchart TB
   classDef resource fill:#eef4ff,stroke:#4777b7,color:#172033
   classDef controller fill:#e7f0ff,stroke:#2563eb,color:#172033,stroke-width:2px
   classDef external fill:#fff0df,stroke:#f48120,color:#172033,stroke-width:2px
-  classDef note fill:#f8fafc,stroke:#718096,color:#172033,stroke-dasharray:5 4
   class hostSources,generated,manual,scope,ip resource
   class scopeController,ipController,hostController,dnsController controller
   class cloudflare,ipSources external
-  class deletionGuard note
 ```
 
 The Account and Zone controllers establish the Cloudflare scope, while the IP controller maintains reusable static or dynamic content. The Ingress controller and the opt-in Gateway API controllers translate hostnames and annotations into owner-controlled DNSRecord objects. The DNSRecord controller then resolves the referenced Account, Zone, and IP resources before applying the record to Cloudflare.
