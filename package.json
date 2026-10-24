@@ -11,5 +11,10 @@
     "postcss": "^8.5.15",
     "postcss-cli": "^12.0.0",
     "wrangler": "4.152.0"
+  },
+  "overrides": {
+    "miniflare": {
+      "undici": "7.30.1"
+    }
   }
 }
