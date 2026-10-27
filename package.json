@@ -10,7 +10,7 @@
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.15",
     "postcss-cli": "^12.0.0",
-    "wrangler": "4.152.0"
+    "wrangler": "4.153.0"
   },
   "overrides": {
     "undici": "7.30.1"
